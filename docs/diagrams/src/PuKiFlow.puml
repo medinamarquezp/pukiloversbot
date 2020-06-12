@@ -3,34 +3,21 @@ start
 title PuKi Lovers Bot
 
 :Obtener media; 
-note right: Los componentes media pueden ser imágenes, vídeos o gifs animados
+note right: Los componentes media pueden ser imágenes o gifs animados
 
-if (¿Es una imágen?) then (sí)
-    if (¿La imagen ha sido publicada previamente?) then (sí)
-        :Imagen descartada;
-        stop
-    else (no)
-        if (¿Aparecen personas en la imagen?) then (sí)
-            :Imagen descartada;
-            stop
-        else (no)
-            :Generar contenido publicación;
-            note right: Mensaje aleatorio y Etiquetas
-            :Publicar en SSMM;
-            :Guardar registro imagen;
-            :Notificar publicación;
-            stop
-        endif
-    endif
+if (¿El contenido ha sido publicado previamente?) then (sí)
+    :Descartar;
+    stop
 else (no)
-    if (¿El vídeo o gif ha sido publicado previamente?) then (sí)
-        :Vídeo o gif descartado;
+    if (¿Aparecen personas?) then (sí)
+        :Descartar;
         stop
     else (no)
         :Generar contenido publicación;
         note right: Mensaje aleatorio y Etiquetas
+        :Concatenar contenido con media;
         :Publicar en SSMM;
-        :Guardar registro vídeo o gif;
+        :Guardar registro media;
         :Notificar publicación;
         stop
     endif
