@@ -1,5 +1,5 @@
-import fetch from "./../../services/fetch.service";
-import config from "./../../config/main";
+import fetch from "../../services/fetch.service";
+import config from "../../config/main";
 
 describe("Fetching data test", () => {
   test("It should display an error fetching data from an API without authorization", async () => {
@@ -8,7 +8,15 @@ describe("Fetching data test", () => {
     const data = await fetch.get(`${url}/search`, params);
     expect(data.error).toBe("Authorization field missing");
   });
-  test("It should works on fetching data from a correct API", async () => {
+  test("It should works on fetching an image by term", async () => {
+    const { url, key } = config.producers.pexels;
+    const headers = { Authorization: key };
+    const params = { query: "test" };
+    const data = await fetch.get(`${url}/search`, params, headers);
+    const firstImageId = 212286;
+    expect(data.photos?.[0].id).toBe(firstImageId);
+  });
+  test("It should works on fetching an image by ID", async () => {
     const { url, key } = config.producers.pexels;
     const headers = { Authorization: key };
     const mockRS = {

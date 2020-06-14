@@ -1,4 +1,4 @@
-export interface IPexels {
+interface IPexels {
   total_results: number;
   page: number;
   per_page: number;
@@ -26,3 +26,5 @@ interface Src {
   landscape: string;
   tiny: string;
 }
+
+export { IPexels as default, Src };

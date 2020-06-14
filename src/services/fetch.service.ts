@@ -1,8 +1,8 @@
-import client, { HeadersInit } from "node-fetch";
+import client, { HeadersInit as Headers } from "node-fetch";
 import { validateURLFormat, urlParams } from "./url.service";
 
 const fetch = {
-  async get(url: string, params?: object, headers?: HeadersInit): Promise<any> {
+  async get(url: string, params?: object, headers?: Headers): Promise<any> {
     validateURLFormat(url);
     const searchUrl = urlParams(url, params);
     const options = headers ? { method: "GET", headers } : { method: "GET" };
@@ -15,4 +15,4 @@ const fetch = {
   },
 };
 
-export default fetch;
+export { fetch as default, Headers };
