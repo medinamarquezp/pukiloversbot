@@ -17,27 +17,5 @@ export const contents = [
   "El rey de la casa 👑",
   "Es que me lo como 😍",
   "Imposible que no se te caiga la baba...",
-  "Uy que cachorrito!!!"
-
-]
-
-export const hashtags = {
-  puppies: [
-    "cachorros",
-    "mascota",
-    "bebes",
-    "cachorritos",
-    "perritos",
-    "perretes",
-    "perro",
-  ],
-  kitties: [
-    "cachorros",
-    "mascota",
-    "bebes",
-    "cachorritos",
-    "gatos",
-    "gaticos",
-    "gatetes"
-  ]
-}
+  "Uy que cachorrito!!!",
+];
