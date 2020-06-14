@@ -26,7 +26,7 @@ class Pexels implements IProducer {
     size: keyof Src = "large"
   ): Promise<string | undefined> {
     const media = await this.fetchMediaByTerm(term);
-    return media.photos?.[0].src[size];
+    return media.total_results > 0 ? media.photos?.[0].src[size] : "Not Found";
   }
 
   async getImageByID(id: number, size: keyof Src = "large"): Promise<any> {
