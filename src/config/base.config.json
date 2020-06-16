@@ -7,6 +7,10 @@
     "unsplash": {
       "url": "",
       "key": ""
+    },
+    "giphy": {
+      "url": "",
+      "key": ""
     }
   }
 }
