@@ -1,4 +1,4 @@
-export const contents = [
+const contents = [
   "No es para comérselo 🥰🥰🥰",
   "Se me cae la baba 🤤",
   "Uy uy uy uy 😍",
@@ -19,3 +19,5 @@ export const contents = [
   "Imposible que no se te caiga la baba...",
   "Uy que cachorrito!!!",
 ];
+
+export default contents;
