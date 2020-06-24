@@ -15,7 +15,7 @@ describe("Giphy producer tests", () => {
     expect(imageByID.message).toBe("Not Found.");
   });
   test("It should display a gif URL when searching by correct ID", async () => {
-    const imageByIDURL = "https://i.giphy.com/J5dTZWVfDnCeVgkENg.gif";
+    const imageByIDURL = "https://i.giphy.com/media/J5dTZWVfDnCeVgkENg/giphy.webp";
     const imageByID = await giphy.getImageByID("J5dTZWVfDnCeVgkENg");
     expect(imageByID).toBe(imageByIDURL);
   });

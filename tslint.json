@@ -1,4 +1,7 @@
 {
+  "extends": [
+    "tslint-eslint-rules"
+  ],
   "rules": {
     "adjacent-overload-signatures": true,
     "ban-comma-operator": true,
@@ -47,7 +50,9 @@
     },
     "trailing-comma": {
       "severity": "warning"
-    }
+    },
+    "whitespace": [true, "check-branch", "check-operator", "check-typecast"],
+    "linebreak-style": ["error", "windows"]
   },
   "defaultSeverity": "error"
 }

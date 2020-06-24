@@ -14,7 +14,7 @@ class Giphy implements IProducer {
   }
 
   private gifUrlByID(id: string): string {
-    return `https://i.giphy.com/${id}.gif`;
+    return `https://i.giphy.com/media/${id}/giphy.webp`;
   }
 
   private getHeaders(): Headers {
