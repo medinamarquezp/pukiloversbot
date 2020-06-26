@@ -2,6 +2,7 @@ import IProducer from "../Iproducer";
 import IPexels, { Src } from "./IPexels";
 import config from "../../config/main";
 import fetch, { Headers } from "../../services/fetch.service";
+import { randomNumberBetween } from "../../services/random.service"
 
 class Pexels implements IProducer {
   private url: string;
@@ -17,16 +18,20 @@ class Pexels implements IProducer {
     return { Authorization: this.key };
   }
 
-  private async fetchMediaByTerm(query: string): Promise<IPexels> {
-    return await fetch.get(`${this.url}/search`, { query }, this.getHeaders());
+  private async fetchMedia(query: string, page?: number): Promise<IPexels> {
+    const params = (page) ? { query, per_page: 1, page } : { query }
+    return await fetch.get(`${this.url}/search`, params, this.getHeaders());
   }
 
   async getImageByTerm(
     term: string,
     size: keyof Src = "large"
   ): Promise<string | undefined> {
-    const media = await this.fetchMediaByTerm(term);
-    return media.total_results > 0 ? media.photos?.[0].src[size] : "Not Found";
+    const media = await this.fetchMedia(term);
+    const { total_results } = media
+    const randomResult = randomNumberBetween(1, total_results)
+    const randomImage = await this.fetchMedia(term, randomResult);
+    return randomImage.total_results > 0 ? randomImage.photos?.[0].src[size] : "Not Found";
   }
 
   async getImageByID(id: number, size: keyof Src = "large"): Promise<any> {

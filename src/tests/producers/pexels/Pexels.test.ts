@@ -7,16 +7,14 @@ describe("Pexels producer tests", () => {
     pexels = new Pexels();
   });
   test("It should display a large image when searching by term without specifying size", async () => {
-    const largeImageURL =
-      "https://images.pexels.com/photos/212286/pexels-photo-212286.jpeg?auto=compress&cs=tinysrgb&h=650&w=940";
     const imageByTerm = await pexels.getImageByTerm("test");
-    expect(imageByTerm).toBe(largeImageURL);
+    expect(imageByTerm).toContain("https://images.pexels.com/photos/");
+    expect(imageByTerm).toContain("auto=compress&cs=tinysrgb&h=650&w=940");
   });
   test("It should display a small image when searching by term specifying small size", async () => {
-    const smallImageURL =
-      "https://images.pexels.com/photos/212286/pexels-photo-212286.jpeg?auto=compress&cs=tinysrgb&h=130";
     const imageByTermSmall = await pexels.getImageByTerm("test", "small");
-    expect(imageByTermSmall).toBe(smallImageURL);
+    expect(imageByTermSmall).toContain("https://images.pexels.com/photos/");
+    expect(imageByTermSmall).toContain("auto=compress&cs=tinysrgb&h=130");
   });
   test("It should display an error when searching by incorrect term", async () => {
     const imageByID = await pexels.getImageByTerm("eeeeeeeeeeeeeeeeeeeee");
