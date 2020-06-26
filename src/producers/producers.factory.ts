@@ -1,5 +1,5 @@
 import config from '../config/main'
-import random from '../services/random.service'
+import randomArrayElement from '../services/random.service'
 import IProducer from './IProducer'
 import Giphy from '../producers/giphy/Giphy'
 import Pexels from '../producers/pexels/Pexels'
@@ -10,7 +10,7 @@ const producersList = Object.getOwnPropertyNames(producers)
 
 function getProducerInstance(): IProducer {
     
-    const randomProducer = random(producersList)
+    const randomProducer = randomArrayElement(producersList)
     let producer: IProducer;
 
     switch(randomProducer){
