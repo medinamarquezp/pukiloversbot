@@ -1,4 +1,4 @@
-import config from '../../config/main'
+import config from '../../config'
 import randomArrayElement, { randomNumberBetween } from '../../services/random.service'
 
 describe("Random service tests", () => {

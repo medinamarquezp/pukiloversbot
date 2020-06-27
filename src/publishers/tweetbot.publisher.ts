@@ -1,5 +1,5 @@
 import * as Twitter from 'twitter'
-import config from '../config/main'
+import config from '../config'
 import getImageData, { getImageSize, changeImageExtension } from '../services/image.service'
 
 class TweetBot {

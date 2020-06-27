@@ -1,4 +1,4 @@
-import config from '../config/main'
+import config from '../config'
 import randomArrayElement from '../services/random.service'
 import IProducer from './IProducer'
 import Giphy from '../producers/giphy/Giphy'

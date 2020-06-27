@@ -1,4 +1,4 @@
-import config from "../../config/main"
+import config from "../../config"
 import IRecognition from "./IRecognition"
 import fetch, { Headers } from "../fetch.service"
 

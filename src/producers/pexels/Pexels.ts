@@ -1,6 +1,6 @@
 import IProducer from "../Iproducer";
 import IPexels, { Src } from "./IPexels";
-import config from "../../config/main";
+import config from "../../config";
 import fetch, { Headers } from "../../services/fetch.service";
 import { randomNumberBetween } from "../../services/random.service"
 

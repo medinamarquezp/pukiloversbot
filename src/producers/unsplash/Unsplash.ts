@@ -1,6 +1,6 @@
 import IProducer from "../Iproducer";
 import IUnsplash, { Urls } from "./IUnsplash";
-import config from "../../config/main";
+import config from "../../config";
 import fetch, { Headers } from "../../services/fetch.service";
 
 class Unsplash implements IProducer {

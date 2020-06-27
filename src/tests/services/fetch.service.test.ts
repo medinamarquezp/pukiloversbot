@@ -1,5 +1,5 @@
 import fetch from "../../services/fetch.service";
-import config from "../../config/main";
+import config from "../../config";
 
 describe("Fetching data test", () => {
   test("It should display an error fetching data from an API without authorization", async () => {

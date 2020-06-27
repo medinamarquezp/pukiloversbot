@@ -1,6 +1,6 @@
 import IProducer from "../Iproducer";
 import IGiphy from "./IGiphy";
-import config from "../../config/main";
+import config from "../../config";
 import fetch, { Headers } from "../../services/fetch.service";
 
 class Giphy implements IProducer {
