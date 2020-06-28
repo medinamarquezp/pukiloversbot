@@ -1,6 +1,6 @@
-import IProducer from "../Iproducer";
 import IGiphy from "./IGiphy";
 import config from "../../config";
+import IProducer from "../Iproducer";
 import fetch, { Headers } from "../../services/fetch.service";
 
 class Giphy implements IProducer {
@@ -28,12 +28,15 @@ class Giphy implements IProducer {
       this.getHeaders()
     );
   }
-  async getImageByTerm(term: string): Promise<any> {
+  getType() {
+    return 'giphy'
+  }
+  async getMediaByTerm(term: string): Promise<any> {
     const media = await this.fetchRandomByTerm(term);
     const gifID = media?.data.id;
-    return gifID ? this.gifUrlByID(gifID) : { message: "Not Found." };
+    return gifID ? { id: gifID, imageURL: this.gifUrlByID(gifID) } : { message: "Not Found." };
   }
-  async getImageByID(id: number | string): Promise<any> {
+  async getMediaByID(id: number | string): Promise<any> {
     const searchUrl = `${this.url}/gifs/${id}`;
     const media = await fetch.get(searchUrl, undefined, this.getHeaders());
     const gifID = media?.data.id;

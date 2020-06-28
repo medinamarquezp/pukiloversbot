@@ -11,7 +11,6 @@ const imageBuffer = (url: string): Promise<Buffer> => {
         }).on("error", reject);
     })
 }
-
 const getImageSize = (url: string) => {
     return new Promise((resolve, reject) => {
         https.get(url, res => {
@@ -19,7 +18,6 @@ const getImageSize = (url: string) => {
         }).on("error", reject);
     })
 }
-
 const getImageData = async (url: string): Promise<Buffer> => {
     try {
         return await imageBuffer(url)
@@ -27,7 +25,6 @@ const getImageData = async (url: string): Promise<Buffer> => {
         throw new error("Error on processing image from URL")
     }
 }
-
 const changeImageExtension = (url: string, from: string, to: string): string => {
     if (url.indexOf(`.${from}`) === -1) return url
     return url.replace(`.${from}`, `.${to}`)

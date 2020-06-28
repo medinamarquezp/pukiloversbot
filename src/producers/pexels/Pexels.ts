@@ -1,6 +1,6 @@
-import IProducer from "../Iproducer";
-import IPexels, { Src } from "./IPexels";
 import config from "../../config";
+import IPexels, { Src } from "./IPexels";
+import IProducer, { IImageObject } from "../Iproducer";
 import fetch, { Headers } from "../../services/fetch.service";
 import { randomNumberBetween } from "../../services/random.service"
 
@@ -23,18 +23,21 @@ class Pexels implements IProducer {
     return await fetch.get(`${this.url}/search`, params, this.getHeaders());
   }
 
-  async getImageByTerm(
+  getType() {
+    return 'pexels'
+  }
+  async getMediaByTerm(
     term: string,
     size: keyof Src = "large"
-  ): Promise<string | undefined> {
+  ): Promise<IImageObject | string> {
     const media = await this.fetchMedia(term);
     const { total_results } = media
     const randomResult = randomNumberBetween(1, total_results)
     const randomImage = await this.fetchMedia(term, randomResult);
-    return randomImage.total_results > 0 ? randomImage.photos?.[0].src[size] : "Not Found";
+    return (randomImage.total_results > 0 && randomImage.photos) ? { id: randomImage.photos?.[0].id, imageURL: randomImage.photos?.[0].src[size] } : "Not Found";
   }
 
-  async getImageByID(id: number, size: keyof Src = "large"): Promise<any> {
+  async getMediaByID(id: number, size: keyof Src = "large"): Promise<any> {
     const searchUrl = `${this.url}/photos/${id}`;
     const media = await fetch.get(searchUrl, undefined, this.getHeaders());
     return media.id ? media.src[size] : media;

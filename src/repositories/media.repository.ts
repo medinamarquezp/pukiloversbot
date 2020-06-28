@@ -9,7 +9,6 @@ const save = async (node:string, producer: string, data: IMedia): Promise<boolea
         throw new Error(`Error on inserting media in database: ${error}`)
     }
 }
-
 const get = async (collection: string, producer: string, id: string) => {
     try {
         const repo = db.collection(collection)
@@ -28,18 +27,17 @@ const isPublishedOrRejected = async (collection: string, producer: string, id: s
     return true
 }
 
-
 enum mediaStatus {
     published= 'published',
     rejected= 'rejected'
 }
-
 interface IMedia {
     producer: string,
     producerID: string,
     url: string,
     status: mediaStatus,
     ssmm?: string,
+    content?: string,
     createdAt: FieldValue
 }
 

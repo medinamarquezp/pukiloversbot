@@ -1,3 +1,5 @@
+import randomArrayElement from '../services/random.service'
+
 const contents = [
   "No es para comérselo 🥰🥰🥰",
   "Se me cae la baba 🤤",
@@ -17,7 +19,15 @@ const contents = [
   "El rey de la casa 👑",
   "Es que me lo como 😍",
   "Imposible que no se te caiga la baba...",
-  "Uy que cachorrito!!!",
+  "Uy que monooooo!!!",
 ];
 
-export default contents;
+const getContent = (term: string): string => {
+  const phrase = randomArrayElement(contents)
+  if (term === 'puppy') {
+    return `${phrase} #pukilovers #puppy #cachorro`
+  }
+  return `${phrase} #pukilovers #kittie #gatito`
+}
+
+export default getContent;

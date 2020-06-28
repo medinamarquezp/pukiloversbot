@@ -51,7 +51,6 @@ class TweetBot {
         return await this.tweetAnImage(imageURL, status)
     }
 }
-
 interface ITweetBotResponse {
     id: string,
     source: string,

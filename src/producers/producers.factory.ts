@@ -1,9 +1,9 @@
 import config from '../config'
-import randomArrayElement from '../services/random.service'
 import IProducer from './IProducer'
 import Giphy from '../producers/giphy/Giphy'
 import Pexels from '../producers/pexels/Pexels'
 import Unsplash from '../producers/unsplash/Unsplash'
+import randomArrayElement from '../services/random.service'
 
 const { producers } = config
 const producersList = Object.getOwnPropertyNames(producers)

@@ -1,6 +1,6 @@
-import IProducer from "../Iproducer";
-import IUnsplash, { Urls } from "./IUnsplash";
 import config from "../../config";
+import IUnsplash, { Urls } from "./IUnsplash";
+import IProducer, { IImageObject } from "../Iproducer";
 import fetch, { Headers } from "../../services/fetch.service";
 
 class Unsplash implements IProducer {
@@ -26,14 +26,18 @@ class Unsplash implements IProducer {
       this.getHeaders()
     );
   }
-  async getImageByTerm(
+
+  getType() {
+    return 'unsplash'
+  }
+  async getMediaByTerm(
     term: string,
     size: keyof Urls = "regular"
-  ): Promise<any> {
+  ): Promise<IImageObject | string> {
     const media = await this.fetchRandomByTerm(term);
-    return media?.id ? media?.urls[size] : (media as undefined);
+    return media?.id ? { id: media.id, imageURL: media?.urls[size] } : "No photos found.";
   }
-  async getImageByID(
+  async getMediaByID(
     id: number | string,
     size: keyof Urls = "regular"
   ): Promise<any> {
