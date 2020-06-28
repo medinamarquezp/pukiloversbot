@@ -13,7 +13,7 @@ function getProducerInstance(): IProducer {
     const randomProducer = randomArrayElement(producersList)
     let producer: IProducer;
 
-    switch(randomProducer){
+    switch (randomProducer){
         case "pexels":
             producer = new Pexels;
             break;

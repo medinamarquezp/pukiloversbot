@@ -32,7 +32,7 @@ export const isValidImage = async(url: string): Promise<boolean> => {
 }
 
 export const rejectIfInvalidImage = async (rejectedMedia: IMedia): Promise<boolean> => {
-    if(!isValidImage(rejectedMedia.url)) {
+    if (!isValidImage(rejectedMedia.url)) {
         await save('media', rejectedMedia.producer, rejectedMedia) 
         return true
     }
