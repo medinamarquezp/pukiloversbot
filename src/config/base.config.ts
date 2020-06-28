@@ -1,4 +1,6 @@
 module.exports = {
+  "app_port": process.env.PORT || 8080,
+  "http_token": process.env.HTTP_TOKEN,
   "terms": ["puppy", "kittie"],
   "producers": {
     "pexels": {

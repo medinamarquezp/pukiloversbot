@@ -1,7 +1,13 @@
+import config from '../config'
+import getContent from '../data/content'
 import Recognition from './recognition.service'
+import TweetBot from '../publishers/tweetbot.publisher'
 import { serverTimestamp } from '../services/db.service'
+import randomArrayElement from '../services/random.service'
+import getProducerInstance from '../producers/producers.factory'
 import IProducer, { IImageObject } from '../producers/IProducer'
 import { save, isPublishedOrRejected, IMedia, mediaStatus } from '../repositories/media.repository'
+
 export const getImageToPublish = async (randomTerm: string, producerInstance: IProducer): Promise<IImageObject> => {
     let mediaObject = { id: '', imageURL: '' }
     let imageFound = false
@@ -48,4 +54,13 @@ export const saveIfValidImage = async (media: IImageObject, producerInstance: IP
         createdAt: serverTimestamp
     })
     return true
+}
+
+export const publish = async () => {
+    const randomTerm =  randomArrayElement(config.terms)
+    const content = getContent(randomTerm)
+    const producerInstance = getProducerInstance()
+    const imageToPublish =  await getImageToPublish(randomTerm, producerInstance)
+    await new TweetBot().tweetMedia(imageToPublish.imageURL, content)
+    await saveIfValidImage(imageToPublish, producerInstance)
 }
