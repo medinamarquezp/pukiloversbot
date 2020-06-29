@@ -1,6 +1,6 @@
 import config from "../../config";
 import IPexels, { Src } from "./IPexels";
-import IProducer, { IImageObject } from "../Iproducer";
+import IProducer, { IImageObject } from "../IProducer";
 import fetch, { Headers } from "../../services/fetch.service";
 import { randomNumberBetween } from "../../services/random.service"
 
