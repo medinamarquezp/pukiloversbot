@@ -4,6 +4,10 @@ import { publish } from './services/publisher.service'
 
 const app = express()
 
+app.get('/', (req, res) => {
+    res.status(200).json({ status: 200, message: 'Server Up and running' })
+})
+
 app.get('/publish', async (req, res) => {
     const { token } = req.headers
     if (token && token === config.http_token){
