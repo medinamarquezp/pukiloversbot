@@ -1,4 +1,5 @@
 {
+  "author": "Pedro Medina",
   "name": "puki-lovers-bot",
   "scripts": {
     "lint": "tslint --project tsconfig.json",
