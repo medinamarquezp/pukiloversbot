@@ -12,4 +12,3 @@ lib
 # Config files
 src/config/test.*
 src/config/development.*
-src/config/production.*
