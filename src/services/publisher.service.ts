@@ -57,9 +57,9 @@ export const saveIfValidImage = async (media: IImageObject, producerInstance: IP
 }
 
 export const publish = async () => {
-    const randomTerm =  randomArrayElement(config.terms)
-    const content = getContent(randomTerm)
     const producerInstance = getProducerInstance()
+    const randomTerm =  randomArrayElement(config.terms)
+    const content = getContent(randomTerm, producerInstance.getType())
     const imageToPublish =  await getImageToPublish(randomTerm, producerInstance)
     await new TweetBot().tweetMedia(imageToPublish.imageURL, content)
     await saveIfValidImage(imageToPublish, producerInstance)

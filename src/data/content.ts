@@ -22,12 +22,15 @@ const contents = [
   "Uy que monooooo!!!",
 ];
 
-const getContent = (term: string): string => {
+const getContent = (term: string, producer: string): string => {
   const phrase = randomArrayElement(contents)
+  const isGif = producer === 'giphy'
   if (term === 'puppy') {
-    return `${phrase} #pukilovers #puppy #cachorro`
+    return (isGif) ?  `🐶 #pukilovers #puppy #cachorro` : `${phrase} #pukilovers #puppy #cachorro` 
   }
-  return `${phrase} #pukilovers #kittie #gatito`
+  return (isGif) ? `🐱 #pukilovers #kittie #gatito` : `${phrase} #pukilovers #kittie #gatito` 
 }
+
+
 
 export default getContent;
