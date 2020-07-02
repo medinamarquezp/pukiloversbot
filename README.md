@@ -1,7 +1,12 @@
+<div style="display:block; text-align:center">
+  <img width="150" alt="PuKiLovers" src="https://raw.githubusercontent.com/medinamarquezp/pukiloversbot/master/src/data/logoBG.png">
+</div>
+
 # 🐶 PuKi 🐱 Lovers Bot
 
 **PukiLovers** es un script que comparte contenido multimedia de perritos y gatitos en Redes Sociales. El flujo de eventos que se producen a la hora de realizar una publicación es el siguiente:
 
+![Pukilovers flow](https://raw.githubusercontent.com/medinamarquezp/pukiloversbot/master/docs/diagrams/out/src/PuKiFlow/PuKi%20Lovers%20Bot.png)
 
 Como se puede observar, todo comienza por generar una instancia de un productor de manera aleatoria. Los productores son fuentes de contenido multimedia open source como Pexels, Unsplash, etc. que nutren de contenido a nuestras publicaciones.
 
