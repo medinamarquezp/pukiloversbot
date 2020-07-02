@@ -1,6 +1,6 @@
-<div style="display:block; text-align:center">
+<p align="center">
   <img width="150" alt="PuKiLovers" src="https://raw.githubusercontent.com/medinamarquezp/pukiloversbot/master/src/data/logoBG.png">
-</div>
+</p>
 
 # 🐶 PuKi 🐱 Lovers Bot
 
