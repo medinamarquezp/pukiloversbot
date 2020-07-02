@@ -2,10 +2,13 @@ start
 
 title PuKi Lovers Bot
 
+:Crear instancia de productor aleatorio;
+:Obtener termino aleatorio;
+note right: Puppy o Kittie
 :Obtener media; 
 note right: Los componentes media pueden ser imágenes o gifs animados
 
-if (¿El contenido ha sido publicado previamente?) then (sí)
+if (¿El media ha sido publicado previamente?) then (sí)
     :Descartar;
     stop
 else (no)
@@ -14,11 +17,9 @@ else (no)
         stop
     else (no)
         :Generar contenido publicación;
-        note right: Mensaje aleatorio y Etiquetas
-        :Concatenar contenido con media;
+        note right: Media, mensaje y etiquetas
         :Publicar en SSMM;
         :Guardar registro media;
-        :Notificar publicación;
         stop
     endif
 endif
