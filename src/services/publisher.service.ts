@@ -13,7 +13,7 @@ export const getImageToPublish = async (randomTerm: string, producerInstance: IP
     let imageFound = false
     do {       
         const media = await producerInstance.getMediaByTerm(randomTerm) as IImageObject
-        const existsImage = await isPublishedOrRejected('media', producerInstance.getType(), media.imageURL)
+        const existsImage = await isPublishedOrRejected('media', producerInstance.getType(), media.id)
         if (!existsImage) {
             if (!isValidImage(media.imageURL)) {
                 await rejectIfInvalidImage({
