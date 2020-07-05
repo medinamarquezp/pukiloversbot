@@ -15,10 +15,11 @@ export const getImageToPublish = async (randomTerm: string, producerInstance: IP
         const media = await producerInstance.getMediaByTerm(randomTerm) as IImageObject
         const existsImage = await isPublishedOrRejected('media', producerInstance.getType(), media.id)
         if (!existsImage) {
-            if (!isValidImage(media.imageURL)) {
+            const validImage = await isValidImage(media.imageURL)
+            if (!validImage) {
                 await rejectIfInvalidImage({
                     producer: producerInstance.getType(),
-                    producerID: media.id,
+                    producerID: media.id.toString(),
                     url: media.imageURL,
                     status: mediaStatus.rejected,
                     createdAt: serverTimestamp
@@ -48,7 +49,7 @@ export const rejectIfInvalidImage = async (rejectedMedia: IMedia): Promise<boole
 export const saveIfValidImage = async (media: IImageObject, producerInstance: IProducer): Promise<boolean> => {
     await save('media', producerInstance.getType(), {
         producer: producerInstance.getType(),
-        producerID: media.id,
+        producerID: media.id.toString(),
         url: media.imageURL,
         status: mediaStatus.published,
         createdAt: serverTimestamp
