@@ -9,15 +9,10 @@ import IProducer, { IImageObject } from '../producers/IProducer'
 import { save, isPublishedOrRejected, IMedia, mediaStatus } from '../repositories/media.repository'
 
 export const getImageToPublish = async (randomTerm: string, producerInstance: IProducer): Promise<IImageObject> => {
-    let media, mediaObject = media = { id: '', imageURL: '' }
+    let mediaObject = { id: '', imageURL: '' }
     let imageFound = false
-    do {
-        try {
-            media = await producerInstance.getMediaByTerm(randomTerm) as IImageObject
-        } catch (err) {
-            console.error(err)
-            continue
-        }
+    do {       
+        const media = await producerInstance.getMediaByTerm(randomTerm) as IImageObject
         const existsImage = await isPublishedOrRejected('media', producerInstance.getType(), media.id)
         if (!existsImage) {
             const validImage = await isValidImage(media.imageURL)
