@@ -13,9 +13,12 @@ export const getImageToPublish = async (randomTerm: string, producerInstance: IP
     let imageFound = false
     do {       
         const media = await producerInstance.getMediaByTerm(randomTerm) as IImageObject
+        console.log('Getting a random media by term: ', media)
         const existsImage = await isPublishedOrRejected('media', producerInstance.getType(), media.id)
+        console.log('Checking if image exists: ', existsImage)
         if (!existsImage) {
             const validImage = await isValidImage(media.imageURL)
+            console.log('Checking if is a valid image: ', validImage)
             if (!validImage) {
                 await rejectIfInvalidImage({
                     producer: producerInstance.getType(),
@@ -24,10 +27,12 @@ export const getImageToPublish = async (randomTerm: string, producerInstance: IP
                     status: mediaStatus.rejected,
                     createdAt: serverTimestamp
                 })
+                console.log('Image rejected, getting a new image')
                 continue
             } else {
                 mediaObject = media
                 imageFound = true
+                console.log('Media object ready to be published: ', mediaObject)
             }
         } else { continue }
     } while (!imageFound);
@@ -59,9 +64,14 @@ export const saveIfValidImage = async (media: IImageObject, producerInstance: IP
 
 export const publish = async () => {
     const producerInstance = getProducerInstance()
+    console.log('Getting a producer instance', producerInstance)
     const randomTerm =  randomArrayElement(config.terms)
+    console.log('Getting a random term and content', randomTerm)
     const content = getContent(randomTerm, producerInstance.getType())
+    console.log('Getting image to publish')
     const imageToPublish =  await getImageToPublish(randomTerm, producerInstance)
+    console.log('Publishing on SSMM')
     await new TweetBot().tweetMedia(imageToPublish.imageURL, content)
     await saveIfValidImage(imageToPublish, producerInstance)
+    console.log('Published image saved on DB')
 }
