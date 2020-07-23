@@ -50,7 +50,7 @@ export const saveImage = async (media: IImageObject, producerInstance: IProducer
 
 export const publish = async () => {
     const producerInstance = getProducerInstance()
-    console.log('Getting a producer instance: ', producerInstance.getType)
+    console.log('Getting a producer instance: ', producerInstance.getType())
     const randomTerm =  randomArrayElement(config.terms)
     console.log('Getting a random term and content: ', randomTerm)
     const content = getContent(randomTerm, producerInstance.getType())
