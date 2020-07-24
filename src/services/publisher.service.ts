@@ -3,41 +3,55 @@ import getContent from '../data/content'
 import Recognition from './recognition.service'
 import TweetBot from '../publishers/tweetbot.publisher'
 import { serverTimestamp } from '../services/db.service'
+import { getImageSize } from '../services/image.service'
 import randomArrayElement from '../services/random.service'
 import getProducerInstance from '../producers/producers.factory'
 import IProducer, { IImageObject } from '../producers/IProducer'
 import { save, isPublishedOrRejected, mediaStatus } from '../repositories/media.repository'
 
-export const getImageToPublish = async (randomTerm: string, producerInstance: IProducer): Promise<IImageObject> => {
-    let mediaObject = { id: '', imageURL: '' }
+export const publish = async () => {
+    let producer: IProducer | undefined
+    let randomContent: string | undefined
+    let mediaObject: IImageObject | undefined
     let imageFound = false
     do {       
-        const media = await producerInstance.getMediaByTerm(randomTerm) as IImageObject
-        console.log('Getting a random media by term: ', media)
+        const { producerInstance, content, media } = await randomMediaContent()
         const existsImage = await isPublishedOrRejected('media', producerInstance.getType(), media.id)
         console.log('Checking if image exists: ', existsImage)
         if (!existsImage) {
             const validImage = await isValidImage(media.imageURL)
             console.log('Checking if is a valid image: ', validImage)
             if (!validImage) {
-                await saveImage(media, producerInstance, mediaStatus.rejected)
+                await saveMedia(media, producerInstance, mediaStatus.rejected)
                 console.log('Image rejected, getting a new image')
                 continue
             } else {
+                producer = producerInstance
                 mediaObject = media
+                randomContent = content
                 imageFound = true
                 console.log('Media object ready to be published: ', mediaObject)
             }
         } else { continue }
     } while (!imageFound);
-    return mediaObject
+    if ( mediaObject && randomContent && producer ) {
+        await new TweetBot().tweetMedia(mediaObject.imageURL, randomContent)
+        await saveMedia(mediaObject, producer, mediaStatus.published)
+        console.log('Published on SSMM and saved on DB')
+    } else {
+        console.log('There has been an issue and the content has not been published correctly')
+    }
 }
 
-export const isValidImage = async(url: string): Promise<boolean> => {
-    return await new Recognition().validateImageRecognition(url)
+const isValidImage = async(url: string): Promise<boolean> => {
+    const limitSizeInBytes = 15000000
+    const imageSize = await getImageSize(url) as string
+    const isValidSize = parseInt(imageSize) < limitSizeInBytes
+    const isValidRecognition = await new Recognition().validateImageRecognition(url)
+    return isValidSize && isValidRecognition
 }
 
-export const saveImage = async (media: IImageObject, producerInstance: IProducer, status: mediaStatus): Promise<boolean> => {
+const saveMedia = async (media: IImageObject, producerInstance: IProducer, status: mediaStatus): Promise<boolean> => {
     await save('media', producerInstance.getType(), {
         producer: producerInstance.getType(),
         producerID: media.id.toString(),
@@ -48,16 +62,23 @@ export const saveImage = async (media: IImageObject, producerInstance: IProducer
     return true
 }
 
-export const publish = async () => {
+const randomMediaContent = async (): Promise<IRandomMediaContent> => {
     const producerInstance = getProducerInstance()
     console.log('Getting a producer instance: ', producerInstance.getType())
     const randomTerm =  randomArrayElement(config.terms)
-    console.log('Getting a random term and content: ', randomTerm)
     const content = getContent(randomTerm, producerInstance.getType())
-    console.log('Getting image to publish')
-    const imageToPublish =  await getImageToPublish(randomTerm, producerInstance)
-    console.log('Publishing on SSMM')
-    await new TweetBot().tweetMedia(imageToPublish.imageURL, content)
-    await saveImage(imageToPublish, producerInstance, mediaStatus.published)
-    console.log('Published image saved on DB')
+    console.log('Getting a random term and content: ', randomTerm)
+    const media = await producerInstance.getMediaByTerm(randomTerm) as IImageObject
+    console.log('Getting a random media by term: ', media)
+    return {
+        producerInstance,
+        content,
+        media
+    }
+}
+
+interface IRandomMediaContent {
+    producerInstance: IProducer,
+    content: string,
+    media: IImageObject
 }
